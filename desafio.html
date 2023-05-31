@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campo minado</title>
+</head>
+
+<style>
+    img {
+        max-width: 100%;
+    }
+
+    .botao {
+        background-color: white;
+        width: 50px;
+        height: 50px;
+        font-size: 20px;
+        border: 3px black solid;
+        border-radius: 5px;
+        margin-left: 10px;
+        margin-bottom: 10px;
+    }
+</style>
+
+<body>
+    <h1>Campo minado SPTECH</h1>
+    <div>
+        <span>Tipo de campo: </span>
+        <select id="campos">
+            <option value="2">2x2</option>
+            <option value="3">3x3</option>
+            <option value="4">4x4</option>
+            <option value="5">5x5</option>
+            <option value="6">6x6</option>
+        </select>
+        <button onclick="novoJogo()">Novo jogo</button>
+    </div>
+
+    <span>Minas <span id="qtdMinas">?</span></span> <br>
+    <span>Explosões <span id="qtdExplosões">0</span></span> <br>
+    <span>Pontos <span id="qtdPontos">?</span></span> <br>
+
+
+    <div id="jogo"></div>
+</body>
+
+</html>
+
+<script>
+    var pontuacao = 0
+    var qtdPonto = 0;
+    var minas = []
+    var cartaBranca = []
+    var Explosões = 0;
+
+    function novoJogo() {
+        var option = campos.value;
+        var global = option * option
+        pontuacao = 0
+
+        
+
+
+        var multiplicacao = option * option
+
+        jogo.innerHTML = ''
+
+        for (i = 0; i < multiplicacao; i++) {
+
+            var multiplicacao = option * option
+
+            /* quebra de linha */
+            if (global % option == 0) {
+                jogo.innerHTML += '<br>'
+            }
+            var numAleatorio = parseInt(Math.random() * (3 - 1) + 1)
+
+            if (numAleatorio == 1) {
+                jogo.innerHTML += `<button class="botao" id="${i + 1}" onclick = "pontuar(this.id)">?</button>`
+                cartaBranca.push("branca")
+            } else {
+                jogo.innerHTML += `<button class="botao" id="${i + 1}" onclick = "bomba(this.id)">?</button>`
+               minas.push("bomba")
+            }
+
+            global--
+        }
+        qtdMinas.innerHTML = `${minas.length}`
+        qtdExplosões.innerHTML = `${Explosões}`
+
+
+    }
+
+    // criei contador minas
+    // quando clicar: desativar esse botao, alterar o conteudo para um quadrado branco, somar  100 na pontuação
+    function pontuar(id) {
+        jogo.innerHTML += ""
+        qtdPonto += 100
+        qtdPontos.innerHTML = `: ${qtdPonto}`
+
+        var botaoAtual = document.getElementById(id)
+        botaoAtual.setAttribute("onclick", "jaclicou()");
+        console.log(botaoAtual)
+
+
+        cartaBranca.splice(0, 1)
+
+
+        botaoAtual.innerHTML = "<img src='stop.png' style = ''>"
+    }
+
+    function bomba(id) {
+        var botaoBomba = document.getElementById(id)
+
+        botaoBomba.setAttribute("onclick", "jaclicou()");
+        console.log(botaoBomba)
+        botaoBomba.innerHTML = "<img src='bomb.png' style = ''>"
+
+        Explosões++
+        qtdExplosões.innerHTML = `${Explosões}`
+    }
+
+    function jaclicou(){
+        alert("Você já clicou nesse bloco")
+    }
+</script>
