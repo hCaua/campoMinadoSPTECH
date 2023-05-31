@@ -60,9 +60,9 @@
         var option = campos.value;
         var global = option * option
         pontuacao = 0
-
-        
-
+        minas = []
+        Explosões = 0
+        pontuacao = 0
 
         var multiplicacao = option * option
 
@@ -100,7 +100,7 @@
         jogo.innerHTML += ""
         qtdPonto += 100
         qtdPontos.innerHTML = `: ${qtdPonto}`
-
+        
         var botaoAtual = document.getElementById(id)
         botaoAtual.setAttribute("onclick", "jaclicou()");
         console.log(botaoAtual)
@@ -108,6 +108,9 @@
 
         cartaBranca.splice(0, 1)
 
+        if(cartaBranca.length == 0){
+            alert("Jogo ganho")
+        }
 
         botaoAtual.innerHTML = "<img src='stop.png' style = ''>"
     }
